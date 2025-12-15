@@ -6,6 +6,6 @@ public class Controller {
     private MainFrame mainFrame;
 
     public Controller(){
-        MainFrame mainFrame = new MainFrame(1000, 800, this);
+        MainFrame mainFrame = new MainFrame( this);
     }
 }
