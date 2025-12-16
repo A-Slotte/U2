@@ -1,4 +1,4 @@
-package View;
+package View.menuView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,6 +14,7 @@ public class BackgroundPanel extends JPanel {
     public BackgroundPanel(){
         createBackground();
     }
+
 
     private void createBackground(){
         try {

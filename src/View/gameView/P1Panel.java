@@ -1,4 +1,4 @@
-package View;
+package View.gameView;
 
 import javax.swing.*;
 

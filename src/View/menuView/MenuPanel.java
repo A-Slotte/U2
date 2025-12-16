@@ -1,9 +1,7 @@
-package View;
+package View.menuView;
+
 import javax.swing.*;
 import java.awt.*;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class MenuPanel {
     private JPanel MPanel;

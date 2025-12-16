@@ -1,4 +1,7 @@
 package View.gameView;
 
-public enum buttonActions {
+public enum GridActions {
+    BUTTONPRESSED,
+    BUTTONETERED,
+    BUTTONRELEASED,
 }
