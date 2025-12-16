@@ -21,7 +21,7 @@ public class MenuPanel {
     }
     private void createLabels(){
         label = new JLabel("Map size");
-        Title = new JLabel("Omvalvare");
+        Title = new JLabel("Omvälvare");
         Title.setFont(new Font("Dungeon Mode", Font.BOLD, 70));
         Title.setForeground(new Color(181, 59,89));
         label.setFont(new Font("Dungeon Mode", Font.BOLD, 35));
