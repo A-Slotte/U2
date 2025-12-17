@@ -3,14 +3,20 @@ package View.gameView;
 import javax.swing.*;
 
 public class PlayerPanel extends JPanel {
-    public PlayerPanel(){
-
+    protected int nbrOfPieces;
+    protected String topLabel;
+    public PlayerPanel(String TopLabel){
+        this.topLabel = topLabel;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setUp();
     }
     public void setUp(){
-        JLabel test = new JLabel("PLayer 1");
-        this.add(test);
+        
     }
+    public void nbrOfPieces(){
+
+    }
+
+
 
 }

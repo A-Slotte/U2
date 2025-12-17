@@ -12,36 +12,22 @@ import java.util.ArrayList;
 
 
 
-public class GridPanel extends JPanel implements ActionListener, ItemListener, MouseListener {
-    private MainFrame frame;
+public class GridPanel extends JPanel implements ActionListener, ItemListener {
     private ArrayList<JButton> buttons;
     private ArrayList<Icon> iconList = new ArrayList<>();
     private BufferedImage spriteSheet;
-    private JPanel gamePanel;
-    private Icon emptIcon;
-    private Icon pressedIcon;
-    private Icon hoveredIcon;
-    private JPanel panel;
 
-    public GridPanel(int x, int y, JPanel panel, GamePanel gamePanel){
-        this.panel = panel;
-        this.gamePanel = gamePanel;
-        readSprite();
+    public GridPanel(){
+        readSpriteSheet();
+
         GridLayout gridLayout = new GridLayout(8, 8);
         this.setLayout(gridLayout);
         this.setBackground(new Color(0, 0, 0, 0));
         setPreferredSize(new Dimension(500, 500));
         fillGrid();
     }
-    /*
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
 
-        g.drawImage(slotImg, 30, 0, null);
-    }
-    */
-
-    public void readSprite(){
+    public void readSpriteSheet(){
         try {
             spriteSheet = ImageIO.read(getClass().getResource("/spritesheet1.png"));
         }
@@ -49,7 +35,14 @@ public class GridPanel extends JPanel implements ActionListener, ItemListener, M
             System.out.println("Sprite Failed to load");
             throw new RuntimeException();
         }
+        iconList.add(new ImageIcon(spriteSheet.getSubimage(0,0,70,70)));
+        iconList.add(new ImageIcon(spriteSheet.getSubimage(70,0,70,70)));
+        iconList.add(new ImageIcon(spriteSheet.getSubimage(70 * 2,0,70,70)));
+        iconList.add(new ImageIcon(spriteSheet.getSubimage(70 * 3,0,70,70)));
+        iconList.add(new ImageIcon(spriteSheet.getSubimage(0,70,70,70)));
+        iconList.add(new ImageIcon(spriteSheet.getSubimage(70,70,70,70)));
     }
+
     public void fillGrid(){
         buttons = new ArrayList<>();
         for (int i = 1; i <= 64; i++){
@@ -57,84 +50,31 @@ public class GridPanel extends JPanel implements ActionListener, ItemListener, M
             buttons.add(button);
             this.add(button);
         }
-        revalidate();
-        repaint();
     }
 
     public JButton createButton(){
+        JButton button = new JButton(iconList.get(0));
 
-        JButton button = new JButton(new ImageIcon(spriteSheet.getSubimage(0, 0, 70, 70)));
-        button.setPressedIcon(new ImageIcon(spriteSheet.getSubimage(0, 0, 70, 70)));
         button.setFocusPainted(false);
         button.setOpaque(true);
-        button.setContentAreaFilled(false);
+        button.setContentAreaFilled(true);
         button.setBorderPainted(false);
-        button.setRolloverEnabled(false);
-        //button.setBackground(new Color(0, 0, 0, 0));
-        button.addActionListener(this);
-        //button.addMouseListener(this);
+        button.setRolloverEnabled(true);
+        button.setRolloverIcon(iconList.get(1));
+        button.setPressedIcon(iconList.get(2));
+        button.setBackground(Color.BLACK);
         button.setMargin(new Insets(0,0,0,0));
         return button;
     }
-    public void mouseEvents(GridActions event, ActionEvent e, MouseEvent m){
-        switch (event){
-            case GridActions.BUTTONETERED:
-
-
-
-
-        }
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("pressed");
-        gamePanel.revalidate();
-        this.revalidate();
-
-
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
 
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        System.out.println("pressed");
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        System.out.println("Released");
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        System.out.println("Entered");
-        JButton button = null;
-        if (e.getSource().getClass() == JButton.class){
-            button = (JButton) e.getSource();
-            System.out.println("212");
-        }
-        else if(button != null){
-            System.out.println("12");
-        }
-        button.setIcon(null);
-        button.setIcon(iconList.get(1));
-    }
-
-
-
-    @Override
 
     public void mouseExited(MouseEvent e) {
         System.out.println("Exited");
@@ -146,7 +86,8 @@ public class GridPanel extends JPanel implements ActionListener, ItemListener, M
         else if(button != null){
             System.out.println("12");
         }
-        button.setIcon(iconList.get(0));
+        button.setIcon(new ImageIcon(spriteSheet.getSubimage(0, 0, 70,70)));
+
 
 
     }

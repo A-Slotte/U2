@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class GamePanel extends JPanel {
     private GridPanel gridPanel;
-    private PlayerPanel panel;
-    private P1Panel p1Panel;
-    private P2Panel p2Panel;
+    private PlayerPanel p1Panel;
+    private PlayerPanel p2Panel;
+
 
     public GamePanel(int x, int y){
         setBackground(Color.BLACK);
@@ -16,13 +16,14 @@ public class GamePanel extends JPanel {
         setLayout(borderLayout);
         setPanelSize();
 
-        gridPanel = new GridPanel(x, y, panel, this);
-        //panel = new PlayerPanel();
+        gridPanel = new GridPanel();
+
 
         setUp();
     }
+    // GridPanel, x = 605, y = 605, P1Panel
     public void setPanelSize(){
-        Dimension size = new Dimension(650,605 );
+        Dimension size = new Dimension(605,605 );
         setPreferredSize(size);
     }
     public void setUp(){
