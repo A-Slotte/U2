@@ -1,4 +1,9 @@
 package Modules;
 
-public class Player {
+public class PlayerItem extends Item{
+
+    public PlayerItem(int x, int y) {
+        super(x, y);
+    }
+
 }

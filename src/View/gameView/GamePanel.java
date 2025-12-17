@@ -17,18 +17,21 @@ public class GamePanel extends JPanel {
         setPanelSize();
 
         gridPanel = new GridPanel();
+        p1Panel = new PlayerPanel("Player 1");
+        p2Panel = new PlayerPanel("Player 2");
 
 
         setUp();
     }
     // GridPanel, x = 605, y = 605, P1Panel
     public void setPanelSize(){
-        Dimension size = new Dimension(605,605 );
+        Dimension size = new Dimension(1005,605 );
         setPreferredSize(size);
     }
     public void setUp(){
         this.add(gridPanel, BorderLayout.CENTER);
-        //this.add(panel, BorderLayout.WEST);
+        this.add(p1Panel, BorderLayout.WEST);
+        this.add(p2Panel, BorderLayout.EAST);
     }
     @Override
     protected void paintComponent(Graphics g){
