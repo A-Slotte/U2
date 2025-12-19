@@ -1,6 +1,8 @@
 package View.gameView;
 
-import View.MainFrame;
+import Controller.*;
+import Model.GridUpdate;
+import Model.ItemType;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -8,7 +10,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Klass: GridPanel skapar en GridPanelLayout fylld med GameButtons.
@@ -16,12 +20,14 @@ import java.util.ArrayList;
  * GridPanel extends JPanel och implementerar ActionListener. GridPanel hanterar allt gällande GameButtons
  * som att ändra icons och Action events genom ActionListener.
  */
-public class GridPanel extends JPanel implements ActionListener, ItemListener {
+public class GridPanel extends JPanel implements ActionListener, State {
     private ArrayList<GameButton> buttons;
     private ArrayList<Icon> iconList = new ArrayList<>();
     private BufferedImage spriteSheet;
+    private GamePanel gamePanel;
 
-    public GridPanel(){
+    public GridPanel(GamePanel gamePanel){
+        this.gamePanel = gamePanel;
         readSpriteSheet();
 
         GridLayout gridLayout = new GridLayout(8, 8);
@@ -73,8 +79,10 @@ public class GridPanel extends JPanel implements ActionListener, ItemListener {
      */
     public GameButton getGameButton(int x, int y){
         int index = x * 8 + y;
+        System.out.println(index);
         return buttons.get(index);
     }
+
     /**
      * Skapar GameButton
      */
@@ -92,19 +100,58 @@ public class GridPanel extends JPanel implements ActionListener, ItemListener {
         button.addActionListener(this);
         return button;
     }
+
+    public void addMysterie(int y, int x){
+        var b = getGameButton(y, x);
+        b.setIcon(iconList.get(4));
+        b.setPressedIcon(iconList.get(4));
+        b.setRolloverEnabled(false);
+        b.removeActionListener(this);
+    }
+
+    public void updateGridPanel(List<GridUpdate> updates){
+        for(int i = 0; i < updates.size(); i++){
+            int x = updates.get(i).x();
+            int y = updates.get(i).y();
+            var type = updates.get(i).type();
+            if(type == ItemType.MYSTERY){
+                addMysterie(y, x);
+            }
+            else {
+                addPlayerPiece(x, y, type);
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("pressed");
         GameButton g = (GameButton) e.getSource();
         var x = g.getMyX();
         var y = g.getMyY();
+
+        gamePanel.getMainFrame().getController().buttonPressed(y, x);
+
         System.out.println(g.getMyX()+" "+g.getMyY());
         getGameButton(x, y);
-
     }
+    public void addPlayerPiece(int x, int y, ItemType state){
+        GameButton b = getGameButton(y, x);
+        switch (state){
+            case P1:
+                b.setIcon(iconList.get(5));
+                b.setPressedIcon(iconList.get(5));
+                b.setRolloverEnabled(false);
+                b.removeActionListener(this);
+                break;
+            case P2:
+                b.setIcon(iconList.get(3));
+                b.setPressedIcon(iconList.get(3));
+                b.setRolloverEnabled(false);
+                b.removeActionListener(this);
+                break;
+        }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
     }
 
     @Override
@@ -113,4 +160,13 @@ public class GridPanel extends JPanel implements ActionListener, ItemListener {
     }
 
 
+    @Override
+    public void checkState() {
+
+    }
+
+    @Override
+    public void switchState() {
+
+    }
 }

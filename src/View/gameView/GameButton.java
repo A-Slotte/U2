@@ -32,4 +32,5 @@ public class GameButton extends JButton {
     public void setY(int y) {
         this.y = y;
     }
+
 }

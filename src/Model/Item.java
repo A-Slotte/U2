@@ -1,4 +1,4 @@
-package Modules;
+package Model;
 
 public abstract class Item {
     protected int y;

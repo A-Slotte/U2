@@ -1,4 +1,4 @@
-package Modules;
+package Model;
 
 public enum Mysteries {
     TIDSHOPP,

@@ -21,6 +21,9 @@ public class MainFrame {
         //createMenuFrame();
         createGameFrame();
     }
+    public Controller getController(){
+        return controller;
+    }
     public void createMenuPanels(){
         menuPanel = new MenuPanel(800, 600, frame);
         background = new BackgroundPanel();
@@ -41,7 +44,7 @@ public class MainFrame {
     }
 
     public void createGameFrame(){
-        gamePanel = new GamePanel(8, 8);
+        gamePanel = new GamePanel(8, 8, this);
         frame = new JFrame("Omvälvare");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(gamePanel);
@@ -50,6 +53,9 @@ public class MainFrame {
         frame.setVisible(true);
         frame.pack();
 
+    }
+    public GamePanel getGamePanel(){
+        return gamePanel;
     }
     /*public void setGlobalFont(){
         uiManager.put("Label.font", new Font("Dungeon Mode", Font.PLAIN, 14));

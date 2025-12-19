@@ -1,4 +1,4 @@
-package Modules;
+package Controller;
 
 public enum GameState {
     PLAYER1,

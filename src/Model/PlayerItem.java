@@ -1,9 +1,7 @@
-package Modules;
+package Model;
 
 public class PlayerItem extends Item{
-
     public PlayerItem(int x, int y) {
         super(x, y);
     }
-
 }
