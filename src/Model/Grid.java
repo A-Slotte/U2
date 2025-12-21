@@ -26,6 +26,9 @@ public class Grid {
     public List<GridUpdate> getMysteryPos(){
         return mysteryPos;
     }
+    public Item getItem(int y, int x){
+        return itemGrid[y][x];
+    }
 
     public void generateGrid(int nbrOfMysteries, int height, int width) {
         itemGrid = new Item[height][width];

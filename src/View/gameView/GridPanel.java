@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Klass: GridPanel skapar en GridPanelLayout fylld med GameButtons.
@@ -20,7 +19,7 @@ import java.util.Map;
  * GridPanel extends JPanel och implementerar ActionListener. GridPanel hanterar allt gällande GameButtons
  * som att ändra icons och Action events genom ActionListener.
  */
-public class GridPanel extends JPanel implements ActionListener, State {
+public class GridPanel extends JPanel implements ActionListener {
     private ArrayList<GameButton> buttons;
     private ArrayList<Icon> iconList = new ArrayList<>();
     private BufferedImage spriteSheet;
@@ -159,14 +158,4 @@ public class GridPanel extends JPanel implements ActionListener, State {
         super.paintComponent(g);
     }
 
-
-    @Override
-    public void checkState() {
-
-    }
-
-    @Override
-    public void switchState() {
-
-    }
 }

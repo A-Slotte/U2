@@ -8,7 +8,6 @@ import javax.swing.*;
 public class GameButton extends JButton {
     private int x;
     private int y;
-
     /**
      * Konsstruktorn
      * @param x Tar en int för sin postition i rad.

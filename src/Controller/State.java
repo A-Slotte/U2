@@ -1,6 +1,6 @@
 package Controller;
 
 public interface State {
-    public void checkState();
+    public GameState checkState();
     public void switchState();
 }
