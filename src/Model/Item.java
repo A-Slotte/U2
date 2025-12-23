@@ -4,10 +4,17 @@ public abstract class Item {
     protected int y;
     protected int x;
 
-    public Item(int x, int y){
+    protected ItemType type;
+    public Item(int y, int x, ItemType type){
+        this.type = type;
         this.x = x;
         this.y = y;
     }
+
+    public ItemType getType() {
+        return type;
+    }
+
     public int getX() {
         return x;
     }

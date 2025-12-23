@@ -1,7 +1,6 @@
 package Model;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class Grid {
@@ -12,7 +11,7 @@ public class Grid {
     private int boundsX;
 
     private Item[][] itemGrid;
-    private List<GridUpdate> mysteryPos;
+    private List<GridPos> mysteryPos;
     public Grid(int width, int height, int nbrOfMysteries){
         this.boundsY = height - 1;
         this.boundsX = width - 1;
@@ -23,7 +22,7 @@ public class Grid {
         return itemGrid;
     }
 
-    public List<GridUpdate> getMysteryPos(){
+    public List<GridPos> getMysteryPos(){
         return mysteryPos;
     }
     public Item getItem(int y, int x){
@@ -41,9 +40,10 @@ public class Grid {
             var rX = r.nextInt(0, 8);
             if (rX == 0 && rY == 0 || rX == boundsX && rY == 0 || rY == boundsY && rX == 0 || rY == boundsX && rX == boundsY){
             }
+
             else if(itemGrid[rY][rX] == null){
-                itemGrid[rY][rX] = new MysterieItem(rX, rY);
-                mysteryPos.add(new GridUpdate(rY, rX, ItemType.MYSTERY));
+                //itemGrid[rY][rX] = new MysterieItem(rY, rX, ItemType.MYSTERY);
+                //mysteryPos.add(new GridPos(rY, rX, ItemType.MYSTERY));
                 nbr++;
             }
         }

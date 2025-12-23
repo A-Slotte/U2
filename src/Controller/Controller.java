@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.GridHandler;
-import Model.GridUpdate;
+import Model.GridPos;
 import View.MainFrame;
 import java.util.List;
 
@@ -17,14 +17,14 @@ public class Controller implements State {
     public void startGame(){
         gridHandler = new GridHandler(8, 8, 10);
         mainFrame = new MainFrame( this);
-        List<GridUpdate> mysteryPos= gridHandler.getGrid().getMysteryPos();
+        List<GridPos> mysteryPos= gridHandler.getGrid().getMysteryPos();
         mainFrame.getGamePanel().getGridPanel().updateGridPanel(mysteryPos);
         state = GameState.PLAYER1;
         mainFrame.getGamePanel().updatePlayerPanel(0, 0, state);
     }
 
     public void buttonPressed(int y, int x){
-        gridHandler.placePiece(x, y, state);
+        gridHandler.placePiece(y, x, state);
         switchState();
         update();
     }

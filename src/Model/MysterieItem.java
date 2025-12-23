@@ -4,8 +4,8 @@ import java.util.Random;
 public class MysterieItem extends Item{
     private Mysteries mysterie;
 
-    public MysterieItem(int x, int y) {
-        super(x, y);
+    public MysterieItem(int y, int x, ItemType type) {
+        super(x, y, type);
         pickMysterie();
     }
     public void pickMysterie(){

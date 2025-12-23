@@ -1,7 +1,6 @@
 package View.gameView;
 
-import Controller.*;
-import Model.GridUpdate;
+import Model.GridPos;
 import Model.ItemType;
 
 import javax.imageio.ImageIO;
@@ -62,8 +61,8 @@ public class GridPanel extends JPanel implements ActionListener {
     public void fillGrid(){
         buttons = new ArrayList<>();
         for (int i = 0; i < 64; i++){
-            int x = i / 8;
-            int y = i % 8;
+            int x = i % 8;
+            int y = i / 8;
             GameButton button = createButton(x, y);
             buttons.add(button);
             this.add(button);
@@ -76,9 +75,8 @@ public class GridPanel extends JPanel implements ActionListener {
      * @param y column
      * @return GameButton från Buttons
      */
-    public GameButton getGameButton(int x, int y){
+    public GameButton getGameButton(int y, int x){
         int index = x * 8 + y;
-        System.out.println(index);
         return buttons.get(index);
     }
 
@@ -108,7 +106,7 @@ public class GridPanel extends JPanel implements ActionListener {
         b.removeActionListener(this);
     }
 
-    public void updateGridPanel(List<GridUpdate> updates){
+    public void updateGridPanel(List<GridPos> updates){
         for(int i = 0; i < updates.size(); i++){
             int x = updates.get(i).x();
             int y = updates.get(i).y();
@@ -117,22 +115,21 @@ public class GridPanel extends JPanel implements ActionListener {
                 addMysterie(y, x);
             }
             else {
-                addPlayerPiece(x, y, type);
+                addPlayerPiece(y, x, type);
             }
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("pressed");
         GameButton g = (GameButton) e.getSource();
         var x = g.getMyX();
         var y = g.getMyY();
-
+        System.out.println("y: "+y);
+        System.out.println("x: "+x);
         gamePanel.getMainFrame().getController().buttonPressed(y, x);
 
-        System.out.println(g.getMyX()+" "+g.getMyY());
-        getGameButton(x, y);
+        getGameButton(y, x);
     }
     public void addPlayerPiece(int x, int y, ItemType state){
         GameButton b = getGameButton(y, x);
