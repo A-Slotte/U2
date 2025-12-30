@@ -10,8 +10,8 @@ public class GridHandler implements State {
     private Grid grid;
     private int remainingMysteries;
     private int nbrSpaces;
-    private int p1Score = 0;
-    private int p2Score = 0;
+    private List<Item> p1Score = new ArrayList<>();
+    private List<Item> p2Score = new ArrayList<>();
     private List<GridPos> gridUpdates = new ArrayList<>();
     private List<GridPos> suprisePos = new ArrayList<>();
 
@@ -22,10 +22,10 @@ public class GridHandler implements State {
 
     }
     public int getP1Score(){
-        return p1Score;
+        return p1Score.size();
     }
     public int getP2Score(){
-        return p2Score;
+        return p2Score.size();
     }
     public int getNbrSpaces(){
         return nbrSpaces;
@@ -44,18 +44,18 @@ public class GridHandler implements State {
     public void placePiece(int y, int x, GameState state){
         switch (state){
             case PLAYER1:
-                grid.getItemGrid()[y][x] = new PlayerItem(y, x, ItemType.P1);
-                gridUpdates.add(new GridPos(y, x, ItemType.P1));
-                p1Score++;
                 nbrSpaces--;
+                grid.getItemGrid()[y][x] = new PlayerItem(y, x, ItemType.P1);
+                p1Score.add(grid.getItemGrid()[y][x]);
+                gridUpdates.add(new GridPos(y, x, ItemType.P1));
                 checkAdjacent(y, x, ItemType.MYSTERY, ItemType.P1);
                 break;
             case PLAYER2:
+                nbrSpaces--;
                 grid.getItemGrid()[y][x] = new PlayerItem(y, x, ItemType.P2);
                 gridUpdates.add(new GridPos(y, x, ItemType.P2));
-                nbrSpaces--;
+                p2Score.add(grid.getItemGrid()[y][x]);
                 checkAdjacent(y, x, ItemType.MYSTERY, ItemType.P2);
-                p2Score++;
                 break;
         }
     }
@@ -90,8 +90,12 @@ public class GridHandler implements State {
                     if(item.getType() == player){
                         continue;
                     }
-                    if (searchForSurprises(y, x, i, j, player)){
+                    boolean a = searchForSurprises(y, x, i, j, player);
+                    if (a){
                         suprised(player);
+                    }
+                    else if (!a){
+                        suprisePos.clear();
                     }
                 }
             }
@@ -99,12 +103,19 @@ public class GridHandler implements State {
     }
 
     private void suprised(ItemType type) {
-        for(var pos : suprisePos){
-
-            var y = pos.y();
-            var x = pos.x();
+        for(int i = 0; i < suprisePos.size(); i++){
+            var y = suprisePos.get(i).y();
+            var x = suprisePos.get(i).x();
             gridUpdates.add(new GridPos(y, x, type));
             grid.getItemGrid()[y][x] = new PlayerItem(y, x, type);
+            if (type == ItemType.P1){
+                p1Score.add(grid.getItemGrid()[y][x]);
+                p2Score.removeLast();
+            }
+            else {
+                p2Score.add(grid.getItemGrid()[y][x]);
+                p1Score.removeLast();
+            }
         }
         suprisePos.clear();
     }
@@ -113,7 +124,7 @@ public class GridHandler implements State {
         var nextY = y + deltaY;
         var nextX = x + deltaX;
         var bounds = checkBounds(nextY, nextX);
-        if(bounds != true){
+        if(!bounds){
             return false;
         }
         var nextPos = grid.getItemGrid()[nextY][nextX];
